@@ -1,0 +1,28 @@
+﻿@using System.Web.Mvc.Html
+@model IEnumerable<Vidly.Models.Customer>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Customers</h2>
+
+<table class="table	table-bordered	table-hover">
+    <tr>
+        <th>
+            Customers
+        </th>
+        <th>Membership Type</th>
+    </tr>
+
+@foreach (var customer in Model) {
+    <tr>
+        <td>
+            @Html.ActionLink(Html.DisplayFor(modelItem => customer.Name).ToString(), "New", new { id= customer.Id })
+        </td>
+        <td>@customer.MembershipType.Name</td>
+    </tr>
+}
+
+</table>
