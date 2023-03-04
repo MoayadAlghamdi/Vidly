@@ -9,18 +9,19 @@ namespace Vidly.Models
     public class Movie
     {
         public int Id { get; set; }
-        [Required (ErrorMessage = "The Name is required")]
+        [Required (ErrorMessage = "The Name field is required")]
         public string Name { get; set; }
-        [Required(ErrorMessage = "The Genres is required")]
+        [Required(ErrorMessage = "The Genres field is required")]
         public string Genres { get; set; }
         [Display(Name = "Release Date")]
-        [Required(ErrorMessage = "The Release Date is required")]
+        [Required(ErrorMessage = "The Release Date field is required")]
         [DataType(DataType.Date)]
         public DateTime ReleaseDate { get; set; }
         [DataType(DataType.Date)]
         public DateTime  DateAdded { get; set; }
         [Display(Name = "Number in Stock")]
-        [Required(ErrorMessage = "The Stack is required")]
+        [Required(ErrorMessage = "The Stack field is required")]
+        [Range(1,20,ErrorMessage ="The field Number in Stock must be between 1 and 20.")]
         public int Stack { get; set; }
     }
 }

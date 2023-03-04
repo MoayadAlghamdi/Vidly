@@ -43,7 +43,6 @@ namespace Vidly.Controllers
             return HttpNotFound();
 
         }
-
         public ActionResult New(int? id)
         {
             Customer customer = null;
@@ -55,6 +54,7 @@ namespace Vidly.Controllers
             }
             else
             {
+                customer = new Customer();
                 membershipTypes = _context.MembershipTypes.ToList();
             }
             var viewModel = new NewCustomerViewModel
@@ -65,8 +65,8 @@ namespace Vidly.Controllers
             };
             return View(viewModel);
         }
-
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Save(Customer customer)
         {
             if (!ModelState.IsValid)

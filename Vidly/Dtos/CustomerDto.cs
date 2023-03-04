@@ -3,26 +3,22 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Xml.Linq;
+using Vidly.Models;
 
-namespace Vidly.Models
+namespace Vidly.Dtos
 {
-    public class Customer
+    public class CustomerDto
     {
-        public int Id{ get; set; }
+        public int Id { get; set; }
 
         [Required]
         [StringLength(255)]
         public string Name { get; set; }
 
-        [Display(Name = "Date of Birth")]
-        [DataType(DataType.Date)]
-        [Min18YearsIfAMember]
+        //[Min18YearsIfAMember]
         public DateTime? BirthDate { get; set; }
         public bool IsSubscribedToNewsletter { get; set; }
-        public MembershipType MembershipType { get; set; }
-
-        [Display (Name ="Membership Type")]
         public byte MembershipTypeId { get; set; }
-
     }
 }

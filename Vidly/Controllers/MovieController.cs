@@ -66,6 +66,7 @@ namespace Vidly.Controllers
             return View(viewModel);
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit(Movie movie)
         {
             var movieFound = _context.Movies.Single(a => a.Id == movie.Id);
@@ -107,6 +108,7 @@ namespace Vidly.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult New(Movie movie)
         {
             if (!ModelState.IsValid)
