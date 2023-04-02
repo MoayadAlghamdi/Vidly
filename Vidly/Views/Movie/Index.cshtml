@@ -8,19 +8,19 @@
 <h2>Movies</h2>
 <div><a class="btn btn-primary" href="~/Movie/New">NEW MOVIE</a></div>
 <br />
-<table class="table	table-bordered	table-hover">
-    <tr>
-        <th>Movie</th>
-        <th>Genre</th>
-    </tr>
-    @for (int i = 0; i < Model.Count; i++)
-    {
+<table id="movies" class="table	table-bordered	table-hover">
+    <thead>
         <tr>
-            <td>
-                @Html.ActionLink(Html.DisplayFor(modelItem => Model[i].Name).ToString(), "Edit", new { id = Model[i].Id })
-            </td>
-            <td>@Model[i].Genres</td>
+            <th>Movie</th>
+            <th>Genre</th>
+            <th>Delete</th>
         </tr>
-    }
+    </thead>
+    <tbody>
+    </tbody>
 </table>
+
+@section scripts{
+    <script src="~/Scripts/Manage/ManageMovie.js"></script>
+}
 

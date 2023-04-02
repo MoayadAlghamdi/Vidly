@@ -26,8 +26,7 @@ namespace Vidly.Controllers
         // GET: Customers
         public ActionResult Index()
         {
-            var customers = _context.Customers.Include(c => c.MembershipType).ToList();
-            return View(customers);
+            return View();
         }
 
         // GET: Customers/Details/5
@@ -65,7 +64,7 @@ namespace Vidly.Controllers
             };
             return View(viewModel);
         }
-        [HttpPost]
+        //[HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Save(Customer customer)
         {

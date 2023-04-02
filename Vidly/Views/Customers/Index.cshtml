@@ -10,27 +10,19 @@
 <div><a class="btn btn-primary" href="~/Customers/New">NEW CUSTOMER</a></div>
 <br />
 <table id="customers" class="table	table-bordered	table-hover">
-    <tr>
-        <th>
-            Customers
-        </th>
-        <th>Membership Type</th>
-        <th>Delete</th>
-    </tr>
-
-    @foreach (var customer in Model)
-    {
+    <thead>
         <tr>
-            <td>
-                @Html.ActionLink(Html.DisplayFor(modelItem => customer.Name).ToString(), "New", new { id = customer.Id })
-            </td>
-            <td>@customer.MembershipType.Name</td>
-            <td><button data-user-id="@customer.Id" class="btn-link js-delete">Delete</button></td>
+            <th>
+                Customers
+            </th>
+            <th>Membership Type</th>
+            <th>Delete</th>
         </tr>
-    }
-
+    </thead>
+    <tbody>
+    </tbody>
 </table>
 
 @section scripts{
-<script src="~/Scripts/ManageCustomer.js"></script>    
+<script src="~/Scripts/Manage/ManageCustomer.js"></script>    
 }

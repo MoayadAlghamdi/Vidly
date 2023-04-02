@@ -1,11 +1,14 @@
 ﻿using AutoMapper;
+using Microsoft.Ajax.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Data.Entity;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.UI.WebControls;
+using Vidly.App_Start;
 using Vidly.Dtos;
 using Vidly.Models;
 
@@ -15,16 +18,24 @@ namespace Vidly.Controllers.Api
     {
 
         private DatabaseTest _context;
+        protected readonly IMapper _mapper;
+        private readonly MapperConfiguration _config;
 
         public CustomersController()
         {
             _context = new DatabaseTest();
+            _config = new MapperConfiguration(cfg => cfg.AddProfile<MappingProfile>());
+            _mapper = _config.CreateMapper();
         }
 
         // GET /api/customers
-        public IEnumerable<CustomerDto> GetCustomers()
+        public IHttpActionResult GetCustomers()
         {
-            return _context.Customers.ToList().Select(Mapper.Map<Customer,CustomerDto>);
+            var customerDto = _context.Customers
+                .Include(c => c.MembershipType)
+                .ToList()
+                .Select(_mapper.Map<Customer, CustomerDto>);
+            return Ok(customerDto);
         }
 
         // GET /api/customers/1
@@ -34,7 +45,7 @@ namespace Vidly.Controllers.Api
             if (customer == null)
                 return BadRequest();
             else
-                return Ok(Mapper.Map<Customer, CustomerDto>(customer));
+                return Ok(_mapper.Map<Customer, CustomerDto>(customer));
         }
         // POST /api/customers
         [HttpPost]
@@ -43,7 +54,7 @@ namespace Vidly.Controllers.Api
             if (!ModelState.IsValid)  
                 return BadRequest();
 
-            var customer = Mapper.Map<CustomerDto, Customer>(customerDto);
+            var customer = _mapper.Map<CustomerDto, Customer>(customerDto);
             _context.Customers.Add(customer);
             _context.SaveChanges();
 
@@ -51,29 +62,33 @@ namespace Vidly.Controllers.Api
         }
         // PUT /api/customers/1
         [HttpPut]
-        public void UpdateCustomer(int id , CustomerDto customerDto)
+        public IHttpActionResult UpdateCustomer(int id , CustomerDto customerDto)
         {
             if (!ModelState.IsValid)
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
 
             var existingCustomer = _context.Customers.SingleOrDefault(c => c.Id == id);
             if (existingCustomer == null)
-                throw new HttpResponseException(HttpStatusCode.NotFound);
+                return NotFound();
 
-            Mapper.Map(customerDto, existingCustomer);
+            _mapper.Map(customerDto, existingCustomer);
 
             _context.SaveChanges();
+
+            return Ok();
         }
-        [HttpDelete]
         // DELETE /api/customers/1
-        public void DeleteCustomer(int id)
+        [HttpDelete]
+        public IHttpActionResult DeleteCustomer(int id)
         {
             Customer customer = _context.Customers.SingleOrDefault(c => c.Id == id);
             if (customer == null)
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
+                return NotFound();
 
             _context.Customers.Remove(customer);
             _context.SaveChanges();
+
+            return Ok();
         }
     }
 }

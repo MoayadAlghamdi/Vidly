@@ -65,7 +65,7 @@ namespace Vidly.Controllers
             };
             return View(viewModel);
         }
-        [HttpPost]
+  //      [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Movie movie)
         {
@@ -92,7 +92,7 @@ namespace Vidly.Controllers
             return RedirectToAction("Index");
 
         }
-        [HttpGet]
+ //       [HttpGet]
         public ActionResult New()
         {
             Movie movie = null;
@@ -107,7 +107,7 @@ namespace Vidly.Controllers
             return View(viewModel);
         }
 
-        [HttpPost]
+ //       [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult New(Movie movie)
         {

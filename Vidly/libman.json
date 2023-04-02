@@ -5,6 +5,10 @@
     {
       "library": "bootbox.js@6.0.0",
       "destination": "Scripts/bootbox.js/"
+    },
+    {
+      "library": "datatables@1.10.21",
+      "destination": "Scripts/datatables/"
     }
   ]
 }
